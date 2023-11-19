@@ -19,6 +19,7 @@ public class LegoTest {
 
     @BeforeMethod(alwaysRun = true)
     public void setUpDriver() {
+        System.setProperty("webdriver.chrome.driver", "C:\\testing\\tools\\driver\\chromedriver-win64\\chromedriver.exe");
         driver = new ChromeDriver();
     }
 
