@@ -24,26 +24,27 @@ public class LegoTest {
     }
 
     @Test(description = "Test site navigation")
-    public void testSiteNavigation() throws InterruptedException {
+    public void testSiteNavigation() {
         driver.get("https://www.lego.com/en-us");
         WebElement navigationButton = setWebElement(By.xpath("//button[@id='blt51f52bea34c3fb01_menubutton']"));
         navigationButton.click();
         WebElement newProducts = setWebElement(By.xpath("//a[@data-analytics-title='new']"));
         newProducts.click();
-        Thread.sleep(1000);
+        new WebDriverWait(driver, Duration.ofSeconds(4))
+                .until(ExpectedConditions.urlToBe("https://www.lego.com/en-us/categories/new-sets-and-products"));
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.lego.com/en-us/categories/new-sets-and-products", "The problem lies in navigation");
     }
 
     @Test(description = "Test site navigation using searchbar ")
-    public void searchbarTest() throws InterruptedException {
+    public void searchbarTest(){
         driver.get("https://www.lego.com/en-us");
         WebElement navigationButton = setWebElement(By.xpath("//button[@data-test='search-input-button']"));
         navigationButton.click();
         WebElement inputFile = setWebElement(By.xpath("//input[@name='search']"));
         inputFile.sendKeys("Harry Potter");
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(100));
         inputFile.submit();
-        Thread.sleep(1000);
+        new WebDriverWait(driver, Duration.ofSeconds(4))
+                .until(ExpectedConditions.urlToBe("https://www.lego.com/en-us/search?q=Harry+Potter"));
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.lego.com/en-us/search?q=Harry+Potter", "The problem lies in navigation");
     }
 
@@ -72,15 +73,15 @@ public class LegoTest {
     }
 
     @Test(description = "Test adding product to the bag")
-    public void addToBagTest() throws InterruptedException {
+    public void addToBagTest(){
         driver.get("https://www.lego.com/en-us/product/pac-man-arcade-10323");
         driver.manage().window().fullscreen();
-        WebElement addButton = setWebElement(By.xpath("//button[@data-test='add-to-bag']"));
+        WebElement addButton = setWebElementLocation(By.xpath("//button[@data-test='add-to-bag']"));
         addButton.click();
-        List<WebElement> productSuccessfullyAddedMessage = driver.findElements(By.xpath("//div[@data-test='add-to-bag-modal']"));
-        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(5));
-        Thread.sleep(2000);
-        Assert.assertFalse(!productSuccessfullyAddedMessage.isEmpty(), "Should be message that product was successfully added!");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // Adjust the timeout as needed
+        WebElement addToBagModal = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@data-test='add-to-bag-modal']")));
+
+        Assert.assertFalse(!addToBagModal.isDisplayed(), "Should be message that product was successfully added!");
     }
 
     @Test(description = "Find instruction by name")
