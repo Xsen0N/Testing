@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import webDriver.Browser;
 
 public class ProductPage extends AbstractPage {
-    private static final String PRODUCT_PAGE = "testdata.packman.url";
+    private static final String PRODUCT_PAGE = "https://www.lego.com/en-us/product/pac-man-arcade-10323";
 
     @FindBy(xpath = "//button[@data-test='add-to-bag']")
     private WebElement addToBagButton;

@@ -3,14 +3,12 @@ package pages;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import webDriver.Browser;
-
-import java.util.logging.LogManager;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class InstructionPage extends AbstractPage{
-    protected final Logger logger = LogManager.getLogger(String.valueOf(InstructionPage.class));;
-    private static final String INSTRUCTION_PAGE_URL = "testdata.instruction.page.url";
+        private static final String INSTRUCTION_PAGE_URL = "https://www.lego.com/en-us/service/buildinginstructions";
 
     @FindBy(xpath = "//option[@value='2022']")
     private WebElement yearFilter;
@@ -24,7 +22,6 @@ public class InstructionPage extends AbstractPage{
 
     public InstructionPage openPage() {
         Browser.getDriver().get(INSTRUCTION_PAGE_URL);
-        logger.info("");
         return this;
     }
 

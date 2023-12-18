@@ -8,16 +8,11 @@ import webDriver.Browser;
 
 import java.util.List;
 
-public class ProductsElements {
+public class ProductsElements extends AbstractElement {
     private String addProductMessage = "//div[@data-test='add-to-bag-modal']";
 
     public boolean isAddProductMessageExist() {
         return getElements(addProductMessage).isEmpty();
     }
 
-    private List<WebElement> getElements(String locator) {
-        WebElement wait = new WebDriverWait(Browser.getDriver(), 10)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(locator)));
-        return Browser.getDriver().findElements(By.xpath(locator));
-    }
 }

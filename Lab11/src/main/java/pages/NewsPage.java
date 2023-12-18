@@ -4,7 +4,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
@@ -12,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import webDriver.Browser;
 
 import java.time.Duration;
+import java.util.concurrent.locks.Condition;
 
 public class NewsPage extends AbstractPage {
     @FindBy(xpath = "//h1[@data-test='inpagenav-title']")
@@ -19,7 +19,7 @@ public class NewsPage extends AbstractPage {
 
 
     public NewsPage getURL() {
-        new WebDriverWait(Browser.getDriver(), 30).until(ExpectedConditions.urlToBe("testdata.product.url"));
+        new WebDriverWait(Browser.getDriver(), 30).until(ExpectedConditions.urlToBe("https://www.lego.com/en-us/categories/new-sets-and-products"));
         return this;
     }
 

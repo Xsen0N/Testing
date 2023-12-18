@@ -10,6 +10,7 @@ public class Browser {
 
     public static void initDriver() {
         driver = BrowserFactory.createDriver(BrowserType.CHROME);
+       // Configuration.init();
         driver.manage().window().maximize();
     }
 
@@ -22,7 +23,7 @@ public class Browser {
 
     public static void close() {
         if (driver != null) {
-            driver.close();
+            driver.quit();
         }
         driver = null;
     }

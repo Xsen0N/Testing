@@ -1,9 +1,7 @@
 package pages;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -16,8 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 
 public class MainPage extends AbstractPage {
-    private static final String LEGO_MAIN_PAGE_URL = "testdata.main.page.url";
-
+    private static final String LEGO_MAIN_PAGE_URL = "https://www.lego.com/en-us";
 
     @FindBy(xpath = "//button[@data-test='search-input-button']")
     private WebElement searchButton;
@@ -42,6 +39,9 @@ public class MainPage extends AbstractPage {
 
     @FindBy(xpath = "//button[@data-test='util-bar-wishlist']")
     private WebElement wishButton;
+
+    @FindBy(xpath = "//button[@kind='submit']")
+    private WebElement submitEmailButton;
 
     public MainPage openPage() {
         Browser.getDriver().get(LEGO_MAIN_PAGE_URL);
@@ -69,6 +69,11 @@ public class MainPage extends AbstractPage {
         return this;
     }
 
+    public MainPage submitEmail() {
+        submitEmailButton.click();
+        return this;
+    }
+
     public MainPage clickLocationButton() {
         locationButton.click();
         return this;
@@ -91,12 +96,8 @@ public class MainPage extends AbstractPage {
     }
 
     public SearchResultPage submitInputData() {
-        new FluentWait<>(Browser.getDriver())
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofMillis(500))
-                .ignoring(NoSuchElementException.class)
-                .until(ExpectedConditions.visibilityOf(emailInputField));
-        submitButton.click();
+        Actions actions = new Actions(Browser.getDriver());
+        actions.click(submitButton).perform();
         return new SearchResultPage();
     }
 

@@ -1,5 +1,6 @@
 import elements.MainPageElements;
 import elements.ProductsElements;
+import listeners.RetryAnalyzer;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -12,19 +13,16 @@ public class LegoTest extends BaseTest {
 
     private static String inputData = "Harry Potter";
 
-    @Test(description = "Test site navigation")
+    @Test(description = "Test site navigation", retryAnalyzer = RetryAnalyzer.class)
     public void testSiteNavigation() {
-        MainPage mainPage = new MainPage();
         mainPage.openPage()
                 .clickMainNavigationBarShopButton()
-                .chooseFieldInShopOption()
-                .getURL();
+                .chooseFieldInShopOption();
         Assert.assertTrue(Browser.getDriver().getCurrentUrl().contains("new-sets-and-products"), "The problem lies in navigation");
     }
 
-    @Test(description = "Test site navigation using searchbar ")
+    @Test(description = "Test site navigation using searchbar ", retryAnalyzer = RetryAnalyzer.class)
     public void searchbarTest() {
-        MainPage mainPage = new MainPage();
         mainPage.openPage()
                 .clickSearchButton()
                 .enterDataIntoSearchField(inputData)
@@ -33,7 +31,7 @@ public class LegoTest extends BaseTest {
         Assert.assertEquals(Browser.getDriver().getCurrentUrl(), "https://www.lego.com/en-us/search?q=Harry+Potter", "The problem lies in navigation");
     }
 
-    @Test(description = "Test to find lego instruction by date")
+    @Test(description = "Test to find lego instruction by date", retryAnalyzer = RetryAnalyzer.class)
     public void findInstructionTest() {
         InstructionPage instructionPage = new InstructionPage();
         instructionPage.openPage()
@@ -52,17 +50,17 @@ public class LegoTest extends BaseTest {
         };
     }
 
-    @Test(dataProvider = "testEmails", description = "Test incorrect emails")
+    @Test(dataProvider = "testEmails", description = "Test incorrect emails", retryAnalyzer = RetryAnalyzer.class)
     public void testIncorrectEmails(String email) {
-        MainPage mainPage = new MainPage();
         mainPage.openPage()
-                .enterDataInEmailInputField(email);
+                .enterDataInEmailInputField(email)
+                .submitEmail();
         MainPageElements mainPageElements = new MainPageElements();
         Assert.assertTrue(mainPageElements.isErrorMessageExist());
 
     }
 
-    @Test(description = "Test adding product to the bag")
+    @Test(description = "Test adding product to the bag", retryAnalyzer = RetryAnalyzer.class)
     public void addToBagTest() {
         ProductPage productPage = new ProductPage();
         productPage.openPage()
@@ -71,7 +69,7 @@ public class LegoTest extends BaseTest {
         Assert.assertTrue(productsElements.isAddProductMessageExist(), "Should be message that product was successfully added!");
     }
 
-    @Test(description = "Find instruction by name")
+    @Test(description = "Find instruction by name", retryAnalyzer = RetryAnalyzer.class)
     public void findInstructionByName() {
         InstructionPage instructionPage = new InstructionPage();
         instructionPage.openPage()
@@ -80,26 +78,23 @@ public class LegoTest extends BaseTest {
         Assert.assertEquals(Browser.getDriver().getCurrentUrl(), "https://www.lego.com/en-us/service/buildinginstructions/search?q=Harry%20Potter", "Problems with query processing");
     }
 
-    @Test(description = "Test changing location page")
+    @Test(description = "Test changing location page", retryAnalyzer = RetryAnalyzer.class)
     public void testChangeLocation() {
-        MainPage mainPage = new MainPage();
         mainPage.openPage()
                 .clickLocationButton();
         MainPageElements locationMessage = new MainPageElements();
         Assert.assertTrue(locationMessage.isLocationHeaderDisplayed(), "There is problem with navigation");
     }
 
-    @Test(description = "User should can open social sites links")
+    @Test(description = "User should can open social sites links", retryAnalyzer = RetryAnalyzer.class)
     public void testSocialSitesLinks() {
-        MainPage mainPage = new MainPage();
         mainPage.openPage()
                 .clickSocialSiteLink();
         Assert.assertTrue(Browser.getDriver().getCurrentUrl().contains("facebook"), "Url is not correct");
     }
 
-    @Test(description = "Test unregister user add wish")
+    @Test(description = "Test unregister user add wish", retryAnalyzer = RetryAnalyzer.class)
     public void testAddFavoriteUnregisterUser() {
-        MainPage mainPage = new MainPage();
         mainPage.openPage()
                 .clickWishButton();
         MainPageElements wishIcon = new MainPageElements();

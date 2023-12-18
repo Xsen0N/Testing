@@ -5,10 +5,11 @@ import org.apache.logging.log4j.Logger;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 
+import java.io.IOException;
 
 
 public class TestListener implements ITestListener {
-    private Logger log = LogManager.getRootLogger();
+
     @Override
     public void onTestStart(ITestResult result) {
         ITestListener.super.onTestStart(result);
@@ -21,7 +22,11 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-        saveScreenshot();
+        try {
+            Screenshots.saveScreenshot();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

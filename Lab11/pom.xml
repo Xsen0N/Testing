@@ -54,9 +54,28 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+
         <configuration>
           <source>8</source>
           <target>8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.1.2</version> <!-- Use the latest version -->
+
+        <configuration>
+          <!-- Specify the test suite file -->
+          <suiteXmlFiles>
+            <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+          </suiteXmlFiles>
+
+          <!-- Set system properties -->
+          <systemPropertyVariables>
+            <browser>chrome</browser>
+            <environment>elements</environment>
+          </systemPropertyVariables>
         </configuration>
       </plugin>
     </plugins>
