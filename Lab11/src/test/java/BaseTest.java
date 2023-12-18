@@ -1,10 +1,13 @@
 
+import org.openqa.selenium.logging.LogEntry;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
 
 import pages.MainPage;
 import webDriver.Browser;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class BaseTest {
     MainPage mainPage = null;
@@ -15,8 +18,16 @@ public class BaseTest {
         mainPage = new MainPage();
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true, dependsOnMethods = "printLogs")
     public void closePage() {
         Browser.close();
+    }
+
+    @AfterMethod
+    public void printLogs() {
+        Set<String> logs = Browser.getDriver().manage().logs().get("browser").getAll().stream()
+                .map(LogEntry::getMessage).collect(Collectors.toSet());
+        logs.forEach(System.out::println);
+
     }
 }
